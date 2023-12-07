@@ -1,6 +1,5 @@
 import streamlit as st
 import json
-from math import sqrt
 
 
 def welcome_page():
@@ -61,16 +60,27 @@ def verify_answers(task_inputs, answers):
         else:
             st.error(f'Źle! Odpowiedź "{task_inputs[i]}" jest niepoprawna')
         st.markdown('---')
-    overall.metric('Całkowity wynik w procentach:', str(correct_counter) +' z ' + str(len(answers)) + ' = ' + str(int(correct_counter/len(answers) * 100))+'%')
+    overall.metric('Całkowity wynik:', str(correct_counter) +' z ' + str(len(answers)) + ' = ' + str(int(correct_counter/len(answers) * 100))+'%')
+    if correct_counter/len(answers) == 1.:
+        st.balloons()
+
+def background_gradient():
+    page_bg = """
+        <style>
+        [data-testid="stAppViewContainer"]{
+background-color: rgba(60, 91, 181, 1);
+background-image: linear-gradient(230deg, rgba(60, 91, 181, 1) 0%, rgba(41, 53, 86, 1) 100%);        }
+        </style>
+    """
+    st.markdown(page_bg, unsafe_allow_html=True)
 
 
-# Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-
+    background_gradient()
     name = welcome_page()
     if name:
         homeworks = open_database(name)
-        button, task_inputs, answers = homework_page(homeworks)
-        if button:
-            verify_answers(task_inputs, answers)
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+        if homeworks:
+            button, task_inputs, answers = homework_page(homeworks)
+            if button:
+                verify_answers(task_inputs, answers)
