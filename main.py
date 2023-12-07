@@ -54,15 +54,16 @@ def verify_answers(task_inputs, answers):
     correct_counter = 0
     for i in range(len(answers)):
         st.header(f'Zadanie {i+1}:')
-        if eval(task_inputs[i]) == answers[i]:
+        if eval(task_inputs[i].replace(',', '.')) == round(answers[i], 2):
             correct_counter += 1
-            st.success(f'Super! Odpowiedź {task_inputs[i]} jest poprawna')
+            st.success(f'Super! Odpowiedź "{task_inputs[i]}" jest poprawna')
         else:
             st.error(f'Źle! Odpowiedź "{task_inputs[i]}" jest niepoprawna')
         st.markdown('---')
-    overall.metric('Całkowity wynik:', str(correct_counter) +' z ' + str(len(answers)) + ' = ' + str(int(correct_counter/len(answers) * 100))+'%')
+    overall.metric('Całkowity wynik:', str(correct_counter) + ' z ' + str(len(answers)) + ' = ' + str(int(correct_counter/len(answers) * 100))+'%')
     if correct_counter/len(answers) == 1.:
         st.balloons()
+    return str(correct_counter), str(len(answers)), str(int(correct_counter/len(answers) * 100))+'%'
 
 
 def background_gradient():
@@ -76,6 +77,22 @@ def background_gradient():
     st.markdown(page_bg, unsafe_allow_html=True)
 
 
+def save_to_google_sheets(name, set_name, n_correct, n_all, metric):
+    import pandas as pd
+    from datetime import datetime
+    import gspread
+
+    url = r'https://docs.google.com/spreadsheets/d/11Guq49VaHAvK5fMcs31tacBNQhTya4zGyvzIoazd9f0/edit#gid=0'
+
+    gc = gspread.service_account(filename='service-account.json')
+    sh = gc.open_by_url(url)
+    worksheet = sh.worksheet("submissions")
+
+    data = pd.DataFrame(worksheet.get_all_records())
+    data.loc[len(data)] = [str(datetime.now()), name, set_name, n_correct, n_all, metric]
+    worksheet.update([data.columns.values.tolist()] + list(data.values.tolist()))
+
+
 if __name__ == '__main__':
     background_gradient()
     name = welcome_page()
@@ -84,4 +101,5 @@ if __name__ == '__main__':
         if homeworks:
             button, task_inputs, answers = homework_page(homeworks)
             if button:
-                verify_answers(task_inputs, answers)
+                n_correct, n_all, metric = verify_answers(task_inputs, answers)
+                save_to_google_sheets(name, 'Homework 1', n_correct, n_all, metric)
