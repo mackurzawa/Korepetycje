@@ -64,12 +64,13 @@ def verify_answers(task_inputs, answers):
     if correct_counter/len(answers) == 1.:
         st.balloons()
 
+
 def background_gradient():
     page_bg = """
         <style>
         [data-testid="stAppViewContainer"]{
-background-color: rgba(60, 91, 181, 1);
-background-image: linear-gradient(230deg, rgba(60, 91, 181, 1) 0%, rgba(41, 53, 86, 1) 100%);        }
+            background-color: rgba(60, 91, 181, 1);
+            background-image: linear-gradient(230deg, rgba(60, 91, 181, 1) 0%, rgba(41, 53, 86, 1) 100%);        }
         </style>
     """
     st.markdown(page_bg, unsafe_allow_html=True)
