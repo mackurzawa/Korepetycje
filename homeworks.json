@@ -1,0 +1,22 @@
+{
+  "zuza": {
+    "Homework 1":
+    [
+      {
+        "Question": "2 + 1",
+        "Answers": [],
+        "Correct": "3"
+      },
+      {
+        "Question": "200 / 300",
+        "Answers": [],
+        "Correct": "2/3"
+      },
+      {
+        "Question": "5 * 5",
+        "Answers": [],
+        "Correct": "25"
+      }
+    ]
+  }
+}
