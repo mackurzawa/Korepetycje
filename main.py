@@ -1,5 +1,6 @@
 import streamlit as st
 import json
+import time
 
 
 def welcome_page():
@@ -77,7 +78,7 @@ def background_gradient():
     st.markdown(page_bg, unsafe_allow_html=True)
 
 
-def save_to_google_sheets(name, set_name, n_correct, n_all, metric):
+def save_to_google_sheets(name, set_name, used_time, n_correct, n_all, metric):
     import pandas as pd
     from datetime import datetime
     import gspread
@@ -89,7 +90,7 @@ def save_to_google_sheets(name, set_name, n_correct, n_all, metric):
     worksheet = sh.worksheet("submissions")
 
     data = pd.DataFrame(worksheet.get_all_records())
-    data.loc[len(data)] = [str(datetime.now()), name, set_name, n_correct, n_all, metric]
+    data.loc[len(data)] = [str(datetime.now()), name, set_name, used_time, n_correct, n_all, metric]
     worksheet.update([data.columns.values.tolist()] + list(data.values.tolist()))
 
 
@@ -99,7 +100,11 @@ if __name__ == '__main__':
     if name:
         homeworks = open_database(name)
         if homeworks:
+            if 'start_time' not in st.session_state:
+                st.session_state['start_time'] = time.time()
             button, task_inputs, answers = homework_page(homeworks)
             if button:
+                used_time = round(time.time() - st.session_state['start_time'])
+                st.session_state['start_time'] = time.time()
                 n_correct, n_all, metric = verify_answers(task_inputs, answers)
-                save_to_google_sheets(name, 'Homework 1', n_correct, n_all, metric)
+                save_to_google_sheets(name, 'Homework 1', used_time, n_correct, n_all, metric)
