@@ -1,6 +1,7 @@
 import streamlit as st
 import json
 import time
+from latex2sympy2 import latex2sympy
 
 
 def welcome_page():
@@ -40,11 +41,14 @@ def open_database(name):
 def homework_page(homeworks):
     task_inputs = []
     answers = []
-    for i_task, task in enumerate(homeworks['Homework 1']):
-        st.header(f'Zadanie {i_task+1}')
-        st.latex(task['Question'])
-        answers.append(eval(task['Question']))
+    for i_task, task in enumerate(homeworks['Homework 2']):
+        st.header(f'Zadanie {i_task + 1}')
+        question = task['Question']
+        st.latex(question)
+        answers.append(latex2sympy(question).simplify())
         task_inputs.append(st.text_input('Podaj odpowiedź', key=task['Question']))
+        # Show Answers!
+        # task_inputs.append(st.text_input(str(answers[-1]), key=task['Question']))
         st.markdown('---')
 
     return st.button('Sprawdź!'), task_inputs, answers
@@ -54,17 +58,23 @@ def verify_answers(task_inputs, answers):
     overall = st.empty()
     correct_counter = 0
     for i in range(len(answers)):
-        st.header(f'Zadanie {i+1}:')
-        if eval(task_inputs[i].replace(',', '.')) == round(answers[i], 2):
+        st.header(f'Zadanie {i + 1}:')
+        try:
+            user_answer = round(eval(task_inputs[i].replace(',', '.')), 2)
+        except:
+            user_answer = None
+        true_answer = round(eval(str(answers[i])), 2)
+        if user_answer == true_answer:
             correct_counter += 1
             st.success(f'Super! Odpowiedź "{task_inputs[i]}" jest poprawna')
         else:
             st.error(f'Źle! Odpowiedź "{task_inputs[i]}" jest niepoprawna')
         st.markdown('---')
-    overall.metric('Całkowity wynik:', str(correct_counter) + ' z ' + str(len(answers)) + ' = ' + str(int(correct_counter/len(answers) * 100))+'%')
-    if correct_counter/len(answers) == 1.:
+    overall.metric('Całkowity wynik:', str(correct_counter) + ' z ' + str(len(answers)) + ' = ' + str(
+        int(correct_counter / len(answers) * 100)) + '%')
+    if correct_counter / len(answers) == 1.:
         st.balloons()
-    return str(correct_counter), str(len(answers)), str(int(correct_counter/len(answers) * 100))+'%'
+    return str(correct_counter), str(len(answers)), str(int(correct_counter / len(answers) * 100)) + '%'
 
 
 def background_gradient():
