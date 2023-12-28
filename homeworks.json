@@ -56,6 +56,45 @@
         "Answers": [],
         "Correct": ""
       }
+    ],
+    "Homework 3":
+    [
+      {
+        "Question": "3*\\log_8 4",
+        "Answers": [],
+        "correct": ""
+      },
+      {
+        "Question": "-\\frac{1}{27}*(\\log_{\\frac{1}{4}} 64)*(\\log_{\\frac{1}{3}} 27)",
+        "Answers": [],
+        "correct": ""
+      },
+      {
+        "Question": "\\frac{\\log_3 27}{\\log_3 \\sqrt{27}}",
+        "Answers": [],
+        "correct": ""
+      },
+      {
+        "Question": "\\log_2 20 + \\log_2 0.2",
+        "Answers": [],
+        "correct": ""
+      },
+      {
+        "Question": "\\log_3 33 - \\log_3 11",
+        "Answers": [],
+        "correct": ""
+      }
+    ]
+  },
+
+  "test": {
+    "No homework":
+    [
+      {
+        "Question": "Brak zadan na ten tydzien",
+        "Answers": [],
+        "correct": ""
+      }
     ]
   }
 }
