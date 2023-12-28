@@ -10,7 +10,7 @@ def generate_number_modification(number, modification_prob=.1):
         # Apply modification
         if random.random() < modification_prob:
             # Apply power
-            if random.random() < .5:
+            if random.random() < 1:
                 return str(number) + '^{' + generate_number(modification_prob=0, small_number=True) + '}'
             # Apply square root
             else:
@@ -62,10 +62,12 @@ def generate_equation_page():
     from latex2sympy2 import latex2sympy
     import sympy
 
-    equation = generate_equation()
-    answer = latex2sympy(equation).simplify()
-    if type(answer) is sympy.core.numbers.ComplexInfinity or type(answer) is sympy.core.numbers.NaN:
-        st.write('bad equation')
+    while True:
+        equation = generate_equation()
+        answer = latex2sympy(equation).simplify()
+        if type(answer) is not sympy.core.numbers.ComplexInfinity and type(answer) is not sympy.core.numbers.NaN:
+            break
+
     return equation, answer
     st.latex(equation)
 
