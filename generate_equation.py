@@ -57,17 +57,20 @@ def generate_equation():
     return equation
 
 
-import streamlit as st
-from latex2sympy2 import latex2sympy
-import sympy
+def generate_equation_page():
+    import streamlit as st
+    from latex2sympy2 import latex2sympy
+    import sympy
 
-equation = generate_equation()
-st.latex(equation)
-
-answer = latex2sympy(equation).simplify()
-if type(answer) is sympy.core.numbers.ComplexInfinity or type(answer) is sympy.core.numbers.NaN:
-    st.write('bad equation')
-st.write(latex2sympy(equation).simplify())
-
-if st.button('New'):
     equation = generate_equation()
+    answer = latex2sympy(equation).simplify()
+    if type(answer) is sympy.core.numbers.ComplexInfinity or type(answer) is sympy.core.numbers.NaN:
+        st.write('bad equation')
+    return equation, answer
+    st.latex(equation)
+
+
+    st.write(latex2sympy(equation).simplify())
+    task_input = st.text_input('Podaj odpowiedź')
+
+    return [task_input], [answer]

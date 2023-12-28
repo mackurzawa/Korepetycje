@@ -2,6 +2,7 @@ import streamlit as st
 import json
 import time
 from latex2sympy2 import latex2sympy
+from generate_equation import generate_equation_page
 
 
 def welcome_page():
@@ -107,14 +108,39 @@ def save_to_google_sheets(name, set_name, used_time, n_correct, n_all, metric):
 if __name__ == '__main__':
     background_gradient()
     name = welcome_page()
+    from streamlit_extras.switch_page_button import switch_page
+
     if name:
-        homeworks = open_database(name)
-        if homeworks:
-            if 'start_time' not in st.session_state:
-                st.session_state['start_time'] = time.time()
-            button, task_inputs, answers = homework_page(homeworks)
+        col_b1, col_b2 = st.columns([1, 1])
+        homework_button = col_b1.button('Zadanie Domowe', use_container_width=True)
+        generate_button = col_b2.button('Wygeneruj równanie', use_container_width=True)
+        if 'homework_button' not in st.session_state: st.session_state['homework_button'] = homework_button
+        if 'generate_button' not in st.session_state: st.session_state['generate_button'] = generate_button
+
+        if homework_button or generate_button:
+            st.session_state['generate_button'] = generate_button
+            st.session_state['homework_button'] = homework_button
+
+        if st.session_state['generate_button']:
+            switch_page('Start')
+            if 'random_equation_answer' not in st.session_state:
+                task_input, answer = generate_equation_page()
+                st.session_state['random_equation_answer'] = answer
+            button = st.button('Sprawdź')
             if button:
-                used_time = round(time.time() - st.session_state['start_time'])
-                st.session_state['start_time'] = time.time()
-                n_correct, n_all, metric = verify_answers(task_inputs, answers)
-                save_to_google_sheets(name, 'Homework 1', used_time, n_correct, n_all, metric)
+                del st.session_state['random_equation_answer']
+                n_correct, n_all, metric = verify_answers(task_input, answer)
+
+        if st.session_state['homework_button']:
+            # st.session_state['homework_button'] = homework_button
+            # st.session_state['generate_button'] = generate_button
+            homeworks = open_database(name)
+            if homeworks:
+                if 'start_time' not in st.session_state:
+                    st.session_state['start_time'] = time.time()
+                button, task_inputs, answers = homework_page(homeworks)
+                if button:
+                    used_time = round(time.time() - st.session_state['start_time'])
+                    st.session_state['start_time'] = time.time()
+                    n_correct, n_all, metric = verify_answers(task_inputs, answers)
+                    save_to_google_sheets(name, 'Homework 1', used_time, n_correct, n_all, metric)
