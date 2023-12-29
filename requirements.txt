@@ -3,3 +3,5 @@ gspread
 streamlit
 latex2sympy2 
 streamlit-extras
+python-lxml
+python3-lxml
