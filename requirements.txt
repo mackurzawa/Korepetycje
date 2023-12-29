@@ -1,5 +1,5 @@
 pandas
 gspread
 streamlit
-latex2sympy2 
+latex2sympy2
 streamlit-extras
