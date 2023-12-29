@@ -3,4 +3,4 @@ gspread
 streamlit>=1.9.2
 latex2sympy2
 streamlit-extras
-lxml=4.9.4
+lxml==4.9.4
