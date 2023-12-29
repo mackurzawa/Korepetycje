@@ -84,6 +84,34 @@
         "Answers": [],
         "correct": ""
       }
+    ],
+    "Homework 4":
+    [
+      {
+        "Question": "\\log_5 (25*\\sqrt[3]{5})",
+        "Answers": [],
+        "correct": ""
+      },
+      {
+        "Question": "-\\log_{\\sqrt{2}} (2\\sqrt{2})",
+        "Answers": [],
+        "correct": ""
+      },
+      {
+        "Question": "\\log_8 16 + 1",
+        "Answers": [],
+        "correct": ""
+      },
+      {
+        "Question": "2\\log_{15} 9 + \\log_{15} (5^4)",
+        "Answers": [],
+        "correct": ""
+      },
+      {
+        "Question": "\\log_4 2 + 2\\log_4 8",
+        "Answers": [],
+        "correct": ""
+      }
     ]
   },
 

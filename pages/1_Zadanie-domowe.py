@@ -9,7 +9,7 @@ from streamlit_extras.switch_page_button import switch_page
 from utils import verify_answers, save_homework_to_google_sheets
 
 HOMEWORK_NUMBER = 'No homework'
-HOMEWORK_NUMBER = 'Homework 3'
+HOMEWORK_NUMBER = 'Homework 4'
 
 def open_database(name):
     with open('homeworks.json', "r") as f:
