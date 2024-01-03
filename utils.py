@@ -1,4 +1,5 @@
 import streamlit as st
+from credentials import credentials
 
 
 def verify_answers(task_inputs, answers):
@@ -31,7 +32,8 @@ def save_homework_to_google_sheets(name, set_name, used_time, n_correct, n_all, 
 
     url = r'https://docs.google.com/spreadsheets/d/11Guq49VaHAvK5fMcs31tacBNQhTya4zGyvzIoazd9f0/edit#gid=0'
 
-    gc = gspread.service_account(filename='service-account.json')
+    # gc = gspread.service_account(filename='service-account.json')
+    gc = gspread.service_account(credentials)
     sh = gc.open_by_url(url)
     worksheet = sh.worksheet("Homework submissions")
 
@@ -53,5 +55,4 @@ def save_random_equation_to_google_sheets(equation, answer, user_answer, is_corr
 
     data = pd.DataFrame(worksheet.get_all_records())
     data.loc[len(data)] = [str(datetime.now()), st.session_state['username'], equation, answer, user_answer, is_correct, used_time]
-    print(data)
     worksheet.update([data.columns.values.tolist()] + list(data.values.tolist()))
