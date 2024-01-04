@@ -1,6 +1,6 @@
 # Tutoring App Readme
 
-Welcome to the Tutoring App repository! This application is designed to assist my students in their learning journey by providing two main functionalities - homework assignements and equation generator. App is available here:
+Welcome to the Tutoring App repository! This application is designed to assist my students in their learning journey by providing two main functionalities - homework assignements and equation generator. App is hosted on Streamlit Community Cloud. You can access it here and try it yourself:
 
 https://korepetycje.streamlit.app/  (as name use "test")
 
