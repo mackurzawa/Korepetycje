@@ -116,10 +116,20 @@
   },
 
   "test": {
-    "No homework":
+    "Homework 4":
     [
       {
-        "Question": "Brak zadan na ten tydzien",
+        "Question": "1+2+3+4",
+        "Answers": [],
+        "correct": ""
+      },
+      {
+        "Question": "\\log_4 2 + 2\\log_4 8",
+        "Answers": [],
+        "correct": ""
+      },
+      {
+        "Question": "-\\frac{1}{27}*(\\log_{\\frac{1}{4}} 64)*(\\log_{\\frac{1}{3}} 27)",
         "Answers": [],
         "correct": ""
       }
