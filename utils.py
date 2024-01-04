@@ -49,7 +49,7 @@ def save_random_equation_to_google_sheets(equation, answer, user_answer, is_corr
 
     url = r'https://docs.google.com/spreadsheets/d/11Guq49VaHAvK5fMcs31tacBNQhTya4zGyvzIoazd9f0/edit#gid=0'
 
-    gc = gspread.service_account(filename='service-account.json')
+    gc = gspread.service_account_from_dict(credentials)
     sh = gc.open_by_url(url)
     worksheet = sh.worksheet("Random equation submissions")
 
